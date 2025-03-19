@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Movie Recommendations</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'movies/style.css' %}">
+
+    <title>Movie Recommendation</title>
 </head>
 <body>
-    <h1>All Movies</h1>
-    <ul>
-        {% for movie in movies %}
-            <li>{{ movie.name }} - Genre: {{ movie.genre }} - Rating: {{ movie.rating }}</li>
-        {% endfor %}
-    </ul>
+    <h1>Welcome to the Movie Recommendation App!</h1>
+
+    <!-- Search Form -->
+    <form method="GET" action="">
+        <label for="genre">Search by Genre:</label>
+        <input type="text" id="genre" name="genre" placeholder="Enter Genre">
+        <label for="rating">Minimum Rating:</label>
+        <input type="number" id="rating" name="rating" step="0.1" placeholder="Enter Rating (e.g., 7.5)">
+        
+        <!-- <button type="submit">Search</button> -->
+
+        <button type="submit">Search</button>
+    </form>
 
     <h2>Recommended Movies</h2>
-    <ul>
-        {% for movie in recommended_movies %}
-            <li>{{ movie.name }} - Genre: {{ movie.genre }} - Rating: {{ movie.rating }}</li>
-        {% endfor %}
-    </ul>
+    {% if movies %}
+        <ul>
+            {% for movie in movies %}
+                <li><strong>{{ movie.name }}</strong> - {{ movie.genre }} (Rating: {{ movie.rating }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No movies found. Try a different genre.</p>
+    {% endif %}
 </body>
 </html>

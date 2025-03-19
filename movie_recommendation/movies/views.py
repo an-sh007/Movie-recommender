@@ -1,14 +1,20 @@
 from django.shortcuts import render
 from .models import Movie
-import random
 
 def home(request):
-    # Fetch all movies
+    genre_query = request.GET.get('genre', '')
+    rating_query = request.GET.get('rating', '')
+    
     movies = Movie.objects.all()
+    
+    if genre_query:
+        movies = movies.filter(genre__icontains=genre_query)
+    
+    if rating_query:
+        try:
+            rating = float(rating_query)
+            movies = movies.filter(rating__gte=rating)  # Get movies with rating >= input
+        except ValueError:
+            pass  # Ignore invalid rating inputs
 
-    # Select 3 random movies for recommendations
-    recommended_movies = random.sample(list(movies), min(3, len(movies)))
-
-    return render(request, 'movies/home.html', {'movies': movies, 'recommended_movies': recommended_movies})
-
-# Create your views here.
+    return render(request, 'movies/home.html', {'movies': movies})
