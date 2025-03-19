@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ movie.name }} - Details</title>
+</head>
+<body>
+    <h1>{{ movie.name }}</h1>
+    <p><strong>Genre:</strong> {{ movie.genre }}</p>
+    <p><strong>Rating:</strong> {{ movie.rating }}</p>
+    <a href="{% url 'home' %}">Back to Home</a>
+
+    <h2>Reviews</h2>
+    {% for review in reviews %}
+        <p><strong>{{ review.username }}</strong>: {{ review.comment }}</p>
+        <p><small>{{ review.created_at }}</small></p>
+    {% empty %}
+        <p>No reviews yet. Be the first to review!</p>
+    {% endfor %}
+
+    <h2>Add a Review</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Review</button>
+    </form>
+</body>
+</html>
