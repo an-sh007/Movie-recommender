@@ -36,7 +36,7 @@ python manage.py migrate
 ## 🛠️ Tech Stack
 - **Backend:** Django
 - **Database:** MongoDB using Djongo
-- **Frontend:** HTML, CSS
+- **Frontend:** HTML, CSS,js
 
 ## 📦 Installation
 1. Clone the repository:
