@@ -4,8 +4,55 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'movies/style.css' %}">
     <title>{{ movie.name }} - Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+
+        h1, h2 {
+            color: #007bff;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+        }
+
+        form button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .auth-links {
+            margin-bottom: 20px;
+        }
+
+        .auth-links a {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+    <div class="auth-links">
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+    </div>
+
     <h1>{{ movie.name }}</h1>
     <p><strong>Genre:</strong> {{ movie.genre }}</p>
     <p><strong>Rating:</strong> {{ movie.rating }}</p>
@@ -19,11 +66,15 @@
         <p>No reviews yet. Be the first to review!</p>
     {% endfor %}
 
-    <h2>Add a Review</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit Review</button>
-    </form>
+    {% if user.is_authenticated %}
+        <h2>Add a Review</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Review</button>
+        </form>
+    {% else %}
+        <p>You must <a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a> to add a review.</p>
+    {% endif %}
 </body>
 </html>
