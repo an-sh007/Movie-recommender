@@ -7,6 +7,32 @@ Welcome to the **Movie Recommendation App**! This is a simple web application bu
 - Provide personalized movie recommendations.
 - Simple and clean user interface.
 
+## User Authentication
+
+The Movie Recommendation App includes a simple user authentication system using Django's built-in authentication framework.
+
+### Features:
+- **User Registration**: Users can sign up with a username and password.
+- **Login**: Registered users can log in to access personalized features.
+- **Logout**: Users can securely log out of their accounts.
+
+### URLs:
+- `/register/` - For new users to sign up.
+- `/login/` - To log into the app.
+- `/logout/` - To securely log out.
+
+### Implementation Details:
+- `views.py`: Contains functions for registration, login, and logout using Django's `LoginView`, `LogoutView`, and custom forms.
+- `forms.py`: Includes a custom `UserCreationForm` for user registration.
+- `urls.py`: Maps the authentication routes.
+- `templates/`: Contains user-friendly HTML pages for authentication.
+
+Make sure to apply migrations using:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+
+
 ## 🛠️ Tech Stack
 - **Backend:** Django
 - **Database:** MongoDB using Djongo
