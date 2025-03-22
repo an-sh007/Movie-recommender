@@ -57,10 +57,13 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('/')
+            # Redirect to the next page or home if not specified
+            next_url = request.GET.get('next', 'home')
+            return redirect(next_url)
     else:
         form = LoginForm()
     return render(request, 'movies/login.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)
